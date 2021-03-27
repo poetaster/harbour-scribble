@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0 // File-Loader
-import Sailfish.Silica.private 1.0 // library, disable system gestures
+//import Sailfish.Silica.private 1.0 // library, disable system gestures not allowed in Jolla store. Sigh.
 
 
 Page {
@@ -49,13 +49,13 @@ Page {
         fixedHeight = page.height - idPageHeader.height
         fixedWidth = page.width
     }
-    WindowGestureOverride {
+   /* WindowGestureOverride {
         id: idGestureOverride
         active: (displayLock === true) ? true : false
-        /*onActiveChanged: {
+        onActiveChanged: {
             console.log("Sailfish gestures active = " + active)
-        }*/
-    }
+        }
+    }*/
     RemorseItem {
         z: 8
         id: remorse
@@ -286,7 +286,7 @@ Page {
                     toolColorsPageVisible = false
                     toolImageVisible = false
                 }
-                Icon {
+                /*Icon {
                     visible: (displayLock === true)
                     anchors.right: parent.right
                     anchors.rightMargin: -Theme.paddingSmall * 0.85
@@ -294,7 +294,7 @@ Page {
                     anchors.bottomMargin: Theme.paddingMedium * 0.9
                     scale: 0.5
                     source: "image://theme/icon-s-secure"
-                }
+                }*/
             }
         }
     }
@@ -782,8 +782,9 @@ Page {
                     onClicked: {
                         toolSaveVisible = false
                         idImage.grabToImage(function(image) {
-                            image.saveToFile( "home/nemo/Pictures/" + fileName + ".png" )
-                            //image.saveToFile( "Pictures/" + fileName + ".png" ) // QmlLive debug path
+
+
+                            image.saveToFile( "Pictures/" + fileName + ".png" ); // QmlLive debug path
                         })
                     }
                 }
