@@ -286,7 +286,7 @@ Page {
                     toolColorsPageVisible = false
                     toolImageVisible = false
                 }
-                /*Icon {
+                Icon {
                     visible: (displayLock === true)
                     anchors.right: parent.right
                     anchors.rightMargin: -Theme.paddingSmall * 0.85
@@ -294,7 +294,7 @@ Page {
                     anchors.bottomMargin: Theme.paddingMedium * 0.9
                     scale: 0.5
                     source: "image://theme/icon-s-secure"
-                }*/
+                }
             }
         }
     }
@@ -782,9 +782,8 @@ Page {
                     onClicked: {
                         toolSaveVisible = false
                         idImage.grabToImage(function(image) {
-
-
-                            image.saveToFile( "Pictures/" + fileName + ".png" ); // QmlLive debug path
+                            image.saveToFile( "Pictures/" + fileName + ".png" );
+                            // QmlLive debug path
                         })
                     }
                 }
