@@ -12,6 +12,5 @@ Please file your bug reports here and not in the Jolla or openrepos comments!
 2020 - Tobias Planitzer <tobias.planitzer@protonmail.com>
 
 Tobias wrote Imageworks and poetaster is developing and maintaining in future.
-https://openrepos.net/content/planetosstore/scribble It will remain available there.
 
 2021 - Mark Washeim <blueprint@poetaster.de>
