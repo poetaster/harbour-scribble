@@ -9,10 +9,10 @@ Name:       harbour-scribble
 # << macros
 
 Summary:    Scribble
-Version:    0.2
-Release:    0
+Version:    0.4
+Release:    1
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPLv3
 URL:        https://github.com/poetaster/harbour-scribble
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-scribble.yaml

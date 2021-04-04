@@ -11,7 +11,7 @@ License: GPLv3
 # Usually this line does not need to be modified.
 Sources:
 - '%{name}-%{version}.tar.bz2'
-Description: |
+Description: |https://github.com/poetaster/SFOS-debug/blob/master/journalctl/2021.04.02.jctl
   Simple drawing application.
 Configure: none
 Builder: qmake5

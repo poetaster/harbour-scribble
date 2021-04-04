@@ -15,6 +15,6 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathToMainQml() to get a QUrl to the main QML file
     //
     // To display the view, call "show()" (will show fullscreen on device).
-
+    
     return SailfishApp::main(argc, argv);
 }

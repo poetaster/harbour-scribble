@@ -26,6 +26,7 @@ Page {
     // path variables
     property var backImageFilePath : ""
     property string fileName : idFilenameNew.text.toString()
+    property var savePath : ""
 
     // UI variables
     property bool displayLock : false
@@ -67,6 +68,14 @@ Page {
                 backImageFilePath = selectedContentProperties.filePath
                 idBackImageLoaded.source = encodeURI(backImageFilePath)
                 getScaleOnImageLoad()
+            }
+        }
+    }
+    Component {
+        id: savePickerPage
+        ImagePickerPage {
+            onSelectedContentPropertiesChanged: {
+                savePath = selectedContentProperties.filePath
             }
         }
     }
@@ -780,14 +789,15 @@ Page {
                     icon.height: Theme.iconSizeMedium
                     icon.scale: 0.85
                     onClicked: {
-                        toolSaveVisible = false
+                        toolSaveVisible = false;
+                        pageStack.push(savePickerPage)
                         idImage.grabToImage(function(image) {
-                            image.saveToFile( "Pictures/" + fileName + ".png" );
-                            // QmlLive debug path
+                            image.saveToFile(  savePath + fileName + ".png" )
                         })
                     }
                 }
             }
+
             Rectangle {
                 z: -1
                 anchors.fill: parent
