@@ -10,7 +10,7 @@ Name:       harbour-scribble
 
 Summary:    Scribble
 Version:    0.4
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    GPLv3
 URL:        https://github.com/poetaster/harbour-scribble

@@ -24,7 +24,9 @@ DISTFILES += qml/harbour-scribble.qml \
     rpm/harbour-scribble.spec \
     rpm/harbour-scribble.yaml \
     translations/*.ts \
-    harbour-scribble.desktop
+    harbour-scribble.desktop \
+    translations/harbour-scribble-zh_CN. ts \
+    translations/harbour-scribble-zh_CN. ts
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
@@ -36,6 +38,6 @@ CONFIG += sailfishapp_i18n
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
-#TRANSLATIONS += translations/harbour-scribble-de.ts
+TRANSLATIONS += translations/harbour-scribble-de.ts
 
 HEADERS +=
