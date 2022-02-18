@@ -5,7 +5,7 @@
     <name>FirstPage</name>
     <message>
         <source>Clear drawing?</source>
-        <translation>是否情况绘画?</translation>
+        <translation>是否清除绘图?</translation>
     </message>
 </context>
 </TS>
