@@ -9,23 +9,42 @@ Name:       harbour-scribble
 # << macros
 
 Summary:    Scribble
-Version:    0.4
+Version:    0.5
 Release:    2
 Group:      Qt/Qt
 License:    GPLv3
 URL:        https://github.com/poetaster/harbour-scribble
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-scribble.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
+BuildRequires:  qt5-qttools-linguist
 
 %description
 Simple drawing application.
 
+%if "%{?vendor}" == "chum"
+PackageName: Scribble
+Type: desktop-application
+Categories:
+ - Graphics
+DeveloperName: Mark Washeim (poetaster)
+Custom:
+ - Repo: https://github.com/poetaster/harbour-scribble
+Icon: https://raw.githubusercontent.com/poetaster/harbour-scribble/master/icons/172x172/harbour-scribble.png
+Screenshots:
+ - https://raw.githubusercontent.com/poetaster/harbour-scribble/main/screenshot-01_0.png
+ - https://raw.githubusercontent.com/poetaster/harbour-scribble/main/screenshot-02_0.png
+ - https://raw.githubusercontent.com/poetaster/harbour-scribble/main/screenshot-03_0.png
+Url:
+  Homepage: https://github.com/poetaster/harbour-scribble
+  Help: https://github.com/poetaster/harbour-scribble/discussions
+  Bugtracker: https://github.com/poetaster/harbour-scribble/issues
+  Donation: https://www.paypal.me/poetasterFOSS
+%endif
 
 %prep
 %setup -q -n %{name}-%{version}

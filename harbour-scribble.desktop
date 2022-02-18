@@ -4,6 +4,12 @@ X-Nemo-Application-Type=silica-qt5
 Icon=harbour-scribble
 Exec=harbour-scribble
 Name=Scribble
+
+[X-Sailjail]
+OrganizationName=de.poetaster
+ApplicationName=harbour-scribble
+Permissions=UserDirs;MediaIndexing;RemovableMedia
+
 # translation example:
 # your app name in German locale (de)
 #
