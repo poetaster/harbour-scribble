@@ -7,7 +7,7 @@ import Sailfish.Pickers 1.0 // File-Loader
 Page {
     id: page
     allowedOrientations: Orientation.Portrait
-
+    property bool debug: false
     // drawing variables
     property var myThickness:  [ 0.8, 1.1, 1.3, 1.6, 1.9, 2.1 ]
     property var myColors: [
@@ -36,9 +36,11 @@ Page {
     property bool toolColorsPageVisible: false
     property bool toolImageVisible : false
     property bool toolThicknessVisible : false
+    property bool toolLineCapVisible : false
     property bool toolSaveVisible : false
     property var zoomFactorRotation : 1
     property var firstDown
+    property string lineCapStyle : 'butt'
 
     // undo variables
     property var imageData : []
@@ -116,12 +118,12 @@ Page {
             id: idHeaderGrid
             width: page.width
             height: Theme.itemSizeSmall
-            columns: 8
+            columns: 9
 
             IconButton {
                 id: idUndoButton
                 enabled: ( (cStep+1) > 0 ) ? true : false
-                width: parent.width / 8
+                width: parent.width / 9
                 height: parent.height
                 icon.source: "../symbols/icon-m-undo.svg"
                 icon.width: Theme.iconSizeMedium
@@ -139,6 +141,7 @@ Page {
                     toolImageVisible = false
                     toolColorsPenVisible = false
                     toolColorsPageVisible = false
+                    toolLineCapVisible = false
                     freeDrawCanvas.undo_draw()
                 }
                 onPressAndHold: {
@@ -153,13 +156,34 @@ Page {
                 }
             }
             Item {
-                width: parent.width / 8
+                width: parent.width / 9
                 height: parent.height
             }
 
             IconButton {
+                id:toolLineCap
+                down: (toolLineCapVisible === true)
+                width: parent.width / 9
+                icon.source: "../symbols/icon-m-line.svg"
+                icon.width: Theme.iconSizeMedium
+                icon.height: Theme.iconSizeMedium
+                icon.scale: 0.85
+                onClicked: {
+                    if (toolLineCapVisible === false) {
+                        toolLineCapVisible = true
+                    }
+                    else {
+                        toolLineCapVisible = false
+                    }
+                    toolColorsPenVisible = false
+                    toolColorsPageVisible = false
+                    toolImageVisible = false
+                    toolSaveVisible = false
+                }
+            }
+            IconButton {
                 down: (toolColorsPenVisible === true)
-                width: parent.width / 8
+                width: parent.width / 9
                 icon.width: Theme.iconSizeMedium * 0.6
                 icon.height: Theme.iconSizeMedium * 0.6
                 //icon.scale: 0.5
@@ -168,6 +192,7 @@ Page {
                     toolImageVisible = false
                     toolColorsPageVisible = false
                     toolSaveVisible = false
+                    toolLineCapVisible = false
                     if (toolColorsPenVisible === false) {
                         toolColorsPenVisible = true
                     }
@@ -192,9 +217,10 @@ Page {
                     color: (toolColorsPenVisible === true) ? Theme.highlightColor : paintToolColor
                 }
             }
+
             IconButton {
                 down: (toolThicknessVisible === true)
-                width: parent.width / 8
+                width: parent.width / 9
                 icon.source: "image://theme/icon-m-edit"
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
@@ -210,6 +236,7 @@ Page {
                     toolColorsPageVisible = false
                     toolImageVisible = false
                     toolSaveVisible = false
+                    toolLineCapVisible = false
                 }
                 Label {
                     id: idPenSizeLabel
@@ -223,7 +250,7 @@ Page {
             }
             IconButton {
                 down: (toolImageVisible === true)
-                width: parent.width / 8
+                width: parent.width / 9
                 icon.source: "../symbols/icon-m-backimage.svg"
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
@@ -233,6 +260,7 @@ Page {
                     toolColorsPenVisible = false
                     toolColorsPageVisible = false
                     toolSaveVisible = false
+                    toolLineCapVisible = false
                     if (toolImageVisible === false) {
                         toolImageVisible = true
                     }
@@ -243,7 +271,7 @@ Page {
             }
             IconButton {
                 down: (toolColorsPageVisible === true)
-                width: parent.width / 8
+                width: parent.width / 9
                 icon.source: "../symbols/icon-m-backcolor.svg"
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
@@ -254,6 +282,7 @@ Page {
                     toolImageVisible = false
                     toolColorsPenVisible = false
                     toolSaveVisible = false
+                    toolLineCapVisible = false
                     if (toolColorsPageVisible === false) {
                         toolColorsPageVisible = true
                     }
@@ -273,12 +302,12 @@ Page {
             }
 
             Item {
-                width: parent.width / 8
+                width: parent.width / 9
                 height: parent.height
             }
             IconButton {
                 down: (toolSaveVisible === true)
-                width: parent.width / 8
+                width: parent.width / 9
                 icon.source: "image://theme/icon-m-developer-mode"
                 icon.width: Theme.iconSizeMedium
                 icon.height: Theme.iconSizeMedium
@@ -293,6 +322,7 @@ Page {
                     toolThicknessVisible = false
                     toolColorsPenVisible = false
                     toolColorsPageVisible = false
+                    toolLineCapVisible = false
                     toolImageVisible = false
                 }
                 Icon {
@@ -403,7 +433,7 @@ Page {
 
             function draw_line() {
                 var ctx = getContext('2d')
-                ctx.lineJoin = ctx.lineCap = 'round'
+                ctx.lineJoin = ctx.lineCap = lineCapStyle
                 ctx.strokeStyle = paintToolColor
                 ctx.lineWidth = paintToolSize * paintToolSize * 2
                 ctx.beginPath()
@@ -415,7 +445,7 @@ Page {
 
             function draw_point() {
                 var ctx = getContext('2d')
-                ctx.lineJoin = ctx.lineCap = 'round'
+                ctx.lineJoin = ctx.lineCap = lineCapStyle
                 ctx.strokeStyle = paintToolColor
                 ctx.lineWidth = paintToolSize * paintToolSize * 2
                 ctx.beginPath()
@@ -427,7 +457,10 @@ Page {
 
             function draw_spline() {
                 var ctx = getContext('2d')
-                ctx.lineJoin = ctx.lineCap = 'round'
+                ctx.lineJoin = ctx.lineCap = lineCapStyle
+                if (debug) console.debug(ctx.lineCap)
+                if (debug) console.debug(idComboBoxLineCap.currentIndex)
+
                 ctx.strokeStyle = paintToolColor
                 ctx.lineWidth = paintToolSize * paintToolSize * 2
                 ctx.beginPath()
@@ -491,7 +524,62 @@ Page {
 
             }
         }
-
+        Rectangle {
+            visible: (toolLineCapVisible === true) ? true : false
+            anchors.top: freeDrawCanvas.top
+            anchors.left: freeDrawCanvas.left
+            anchors.leftMargin: Theme.paddingLarge
+            anchors.right: freeDrawCanvas.right
+            anchors.rightMargin: Theme.paddingLarge
+            //color: "transparent"
+            color: Theme.highlightDimmerColor
+            height: idComboBoxLineCap.height
+            width: idComboBoxLineCap.width
+            Grid {
+            //color: Theme.primaryColor
+                id: idComboBoxLineCap
+                anchors.centerIn: parent
+                //width: parent.width // (itemsPerRowLess-1) * (itemsPerRowLess-2)
+                columns: 3
+                spacing: 30
+                IconButton {
+                    icon.source: "../symbols/icon-m-point.svg"
+                    icon.scale: 1.6
+                    onClicked: {
+                        lineCapStyle = "round"
+                        toolLineCapVisible = false
+                        toolLineCap.icon.source = "../symbols/icon-m-point.svg"
+                    }
+                }
+                IconButton {
+                    icon.source: "../symbols/icon-m-area.svg"
+                    icon.scale: 1.6
+                    onClicked: {
+                        lineCapStyle = "square"
+                        toolLineCapVisible = false
+                        toolLineCap.icon.source = "../symbols/icon-m-area.svg"
+                    }
+                }
+                IconButton {
+                    icon.source: "../symbols/icon-m-line.svg"
+                    icon.scale: 1.6
+                    onClicked: {
+                        lineCapStyle = "butt"
+                        toolLineCapVisible = false
+                        toolLineCap.icon.source = "../symbols/icon-m-line.svg"
+                    }
+                }
+            }
+            /*
+            Rectangle {
+                z: -1
+                anchors.fill: parent
+                anchors.bottomMargin: -Theme.paddingMedium
+                anchors.leftMargin: -Theme.paddingMedium
+                anchors.rightMargin: -Theme.paddingMedium
+                color: Theme.highlightDimmerColor
+            }*/
+        }
         Rectangle {
             id: idSubmenuThickness
             visible: (toolThicknessVisible === true) ? true : false

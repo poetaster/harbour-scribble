@@ -19,6 +19,7 @@ SOURCES += src/harbour-scribble.cpp
 DISTFILES += qml/harbour-scribble.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
+    qml/symbols/*.svg \
     rpm/harbour-scribble.changes.in \
     rpm/harbour-scribble.changes.run.in \
     rpm/harbour-scribble.spec \
