@@ -26,7 +26,9 @@ Page {
     // path variables
     property var backImageFilePath : ""
     property string fileName : idFilenameNew.text.toString()
-    property var savePath : ""
+    // this is a workaround until we get file picker working.
+
+    property var savePath : StandardPaths.home + '/Pictures/' //.writableLocation(StandardPaths.DocumentsLocation) //StandardPaths.PicturesLocation
 
     // UI variables
     property bool displayLock : false
@@ -77,6 +79,7 @@ Page {
         id: savePickerPage
         ImagePickerPage {
             onSelectedContentPropertiesChanged: {
+                if (debug) console.debug(savePath)
                 savePath = selectedContentProperties.filePath
             }
         }
@@ -181,6 +184,7 @@ Page {
                     toolSaveVisible = false
                 }
             }
+
             IconButton {
                 down: (toolColorsPenVisible === true)
                 width: parent.width / 9
@@ -459,7 +463,6 @@ Page {
                 var ctx = getContext('2d')
                 ctx.lineJoin = ctx.lineCap = lineCapStyle
                 if (debug) console.debug(ctx.lineCap)
-                if (debug) console.debug(idComboBoxLineCap.currentIndex)
 
                 ctx.strokeStyle = paintToolColor
                 ctx.lineWidth = paintToolSize * paintToolSize * 2
@@ -878,7 +881,8 @@ Page {
                     icon.scale: 0.85
                     onClicked: {
                         toolSaveVisible = false;
-                        pageStack.push(savePickerPage)
+                        //pageStack.push(savePickerPage)
+                        if (debug) console.debug(savePath)
                         idImage.grabToImage(function(image) {
                             image.saveToFile(  savePath + fileName + ".png" )
                         })

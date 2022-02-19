@@ -9,7 +9,7 @@ Name:       harbour-scribble
 # << macros
 
 Summary:    Scribble
-Version:    0.5
+Version:    0.6
 Release:    2
 Group:      Qt/Qt
 License:    GPLv3
